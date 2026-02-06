@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Sparkles, Plus, Clock, Trophy, Check, X, ChevronRight, ArrowRight } from 'lucide-react';
 import { useChallenges, useChallengeCount } from '@/hooks';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, Badge, Button, Loading, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, Badge, Button, Loading, Tabs, TabsContent, TabsList, TabsTriggerButton } from '@/components/ui';
 import { Avatar, LevelBadge } from '@/components/ui';
 import { cn, formatRelativeTime } from '@/lib/utils';
 import type { ChallengeStatus } from '@/types';
@@ -125,14 +125,14 @@ export default function ChallengesPage() {
         <Tabs value={tab} onValueChange={(v) => setTab(v as Tab)}>
           <TabsList>
             {tabs.map((t) => (
-              <TabsTrigger key={t.id} value={t.id}>
+              <TabsTriggerButton key={t.id} value={t.id}>
                 {t.label}
                 {t.count > 0 && (
                   <Badge variant="secondary" size="sm" className="ml-2">
                     {t.count}
                   </Badge>
                 )}
-              </TabsTrigger>
+              </TabsTriggerButton>
             ))}
           </TabsList>
 

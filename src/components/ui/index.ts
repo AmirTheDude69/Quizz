@@ -4,3 +4,4 @@ export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 export { Avatar } from './Avatar';
 export { Badge, XPBadge, LevelBadge } from './Badge';
 export { Loading, LoadingSpinner, LoadingPage, LoadingCard, Skeleton, SkeletonText } from './Loading';
+export { Tabs, TabsList, TabsTrigger, TabsTriggerButton, TabsContent } from './Tabs';
