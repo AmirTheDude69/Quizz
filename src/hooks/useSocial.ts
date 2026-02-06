@@ -61,9 +61,9 @@ export function useFollowing(userId: string, options?: { limit?: number; cursor?
   const [error, setError] = useState<string | null>(null);
   const [nextCursor, setNextCursor] = useState<string | undefined>(undefined);
   const [hasMore, setHasMore] = useState(false);
-  const [totalCount, setTotalCount] =);
+  const [totalCount, setTotalCount] = useState(0);
 
-  const fetch useState(0Following = useCallback(async (params?: { limit?: number; cursor?: string }) => {
+  const fetchFollowing = useCallback(async (params?: { limit?: number; cursor?: string }) => {
     try {
       setIsLoading(true);
       const response = await apiGet<FollowingResponse>(`/social/${userId}/following`, params);
