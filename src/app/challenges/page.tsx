@@ -3,18 +3,18 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Sparkles, Plus, Clock, Trophy, Check, X, ChevronRight, ArrowRight } from 'lucide-react';
+import { Sparkles, Plus, Clock, Trophy, Check, X, ArrowRight } from 'lucide-react';
 import { useChallenges, useChallengeCount } from '@/hooks';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, Badge, Button, Loading, Tabs, TabsContent, TabsList, TabsTriggerButton } from '@/components/ui';
-import { Avatar, LevelBadge } from '@/components/ui';
-import { cn, formatRelativeTime } from '@/lib/utils';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, Badge, Button, Loading } from '@/components/ui';
+import { Avatar } from '@/components/ui';
+import { formatRelativeTime } from '@/lib/utils';
 import type { ChallengeStatus } from '@/types';
 
 type Tab = 'pending' | 'active' | 'completed';
 
 export default function ChallengesPage() {
   const [tab, setTab] = useState<Tab>('pending');
-  const { challenges, isLoading, refresh, loadMore, hasMore } = useChallenges({ status: tab });
+  const { challenges, isLoading } = useChallenges({ status: tab });
   const { count: pendingCount } = useChallengeCount();
 
   const getStatusBadge = (status: ChallengeStatus) => {
@@ -122,21 +122,29 @@ export default function ChallengesPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
-        <Tabs value={tab} onValueChange={(v) => setTab(v as Tab)}>
-          <TabsList>
-            {tabs.map((t) => (
-              <TabsTriggerButton key={t.id} value={t.id}>
-                {t.label}
-                {t.count > 0 && (
-                  <Badge variant="secondary" size="sm" className="ml-2">
-                    {t.count}
-                  </Badge>
-                )}
-              </TabsTriggerButton>
-            ))}
-          </TabsList>
+        <div className="flex gap-1 p-1 bg-background-800/50 rounded-lg">
+          {tabs.map((t) => (
+            <button
+              key={t.id}
+              onClick={() => setTab(t.id)}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center ${
+                tab === t.id
+                  ? 'bg-primary-500/20 text-primary-300 border border-primary-500/30'
+                  : 'text-gray-400 hover:text-white hover:bg-background-700/50'
+              }`}
+            >
+              {t.label}
+              {t.count > 0 && (
+                <Badge variant="secondary" size="sm" className="ml-2">
+                  {t.count}
+                </Badge>
+              )}
+            </button>
+          ))}
+        </div>
 
-          <TabsContent value="pending" className="mt-4">
+        {tab === 'pending' && (
+          <div className="mt-4">
             {isLoading ? (
               <div className="space-y-3">
                 {[...Array(3)].map((_, i) => (
@@ -203,24 +211,28 @@ export default function ChallengesPage() {
                 </Link>
               </div>
             )}
-          </TabsContent>
+          </div>
+        )}
 
-          <TabsContent value="active" className="mt-4">
+        {tab === 'active' && (
+          <div className="mt-4">
             <div className="text-center py-12">
               <Trophy size={48} className="mx-auto text-gray-600 mb-4" />
               <p className="text-gray-400">No active challenges</p>
-              <p className="text-sm text-gray-500 mt-1">Challenges you're playing will appear here</p>
+              <p className="text-sm text-gray-500 mt-1">Challenges you are playing will appear here</p>
             </div>
-          </TabsContent>
+          </div>
+        )}
 
-          <TabsContent value="completed" className="mt-4">
+        {tab === 'completed' && (
+          <div className="mt-4">
             <div className="text-center py-12">
               <Check size={48} className="mx-auto text-gray-600 mb-4" />
               <p className="text-gray-400">No completed challenges</p>
               <p className="text-sm text-gray-500 mt-1">Finished matches will appear here</p>
             </div>
-          </TabsContent>
-        </Tabs>
+          </div>
+        )}
       </motion.div>
     </div>
   );
