@@ -22,8 +22,8 @@ export interface NotificationPreferences {
   challenges: boolean;
   friendRequests: boolean;
   gameInvites: boolean;
- ;
-  levelUps matchResults: boolean: boolean;
+  levelUps: boolean;
+  matchResults: boolean;
   achievements: boolean;
   weeklyDigest: boolean;
 }
