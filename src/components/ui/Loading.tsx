@@ -14,6 +14,10 @@ const sizes = {
   lg: 'w-12 h-12',
 };
 
+export function Loading({ size = 'md', className }: LoadingSpinnerProps) {
+  return <LoadingSpinner size={size} className={className} />;
+}
+
 export function LoadingSpinner({ size = 'md', className }: LoadingSpinnerProps) {
   return (
     <div className={cn('flex items-center justify-center', className)}>
